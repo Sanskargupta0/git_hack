@@ -1,0 +1,36 @@
+appId: com.sgupta.gitcommittimeeditor
+productName: Git Commit Time Editor
+# No code-signing certificate — skip winCodeSign download entirely.
+forceCodeSigning: false
+# LZMA maximum compression for the smallest possible installer.
+compression: maximum
+directories:
+  buildResources: build
+  output: dist
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!scripts/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintrc.cjs,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+  - '!node_modules/.cache'
+  - '!**/*.map'
+# Bundle the icon so the running app can find it in process.resourcesPath.
+extraResources:
+  - from: build/icon.ico
+    to: icon.ico
+afterPack: scripts/after-pack.js
+win:
+  icon: build/icon.ico
+  signAndEditExecutable: false
+  target:
+    - target: nsis
+      arch:
+        - x64
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: false
